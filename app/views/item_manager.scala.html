@@ -1,0 +1,45 @@
+@(newItemForm: Form[MediaItem], items: List[MediaItem])
+
+@import helper._
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>collectr Media List Management</title>
+        <script type="text/javascript" src="@routes.Assets.at("/javascripts/jquery-1.9.0.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("/javascripts/jquery-ui.min.js")"></script>
+        <script type="text/javascript" src="@routes.Assets.at("/javascripts/jquery.ui.tabs.min.js")"></script>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    </head>
+    <body>
+        <h1>Existing Media Items</h1>
+        <table border="1">
+            <tr>
+                <td>Title</td>
+                <td>Year</td>
+                <td>Description</td>
+                <td>Image</td>
+            </tr>
+            @items.map { item =>
+                <tr>
+                    <td>@item.title</td>
+                    <td>@item.year</td>
+                    <td>@item.description</td>
+                    <td>@item.image</td>
+                </tr>
+            }
+        </table>
+
+        <h1>Add Media Item</h1>
+
+        @helper.form(action = routes.Application.addMediaItemSrvc()) {
+            @helper.inputText(field = newItemForm("title"), args = '_label -> "Title")
+            @helper.inputText(field = newItemForm("year"), args = 'size -> 4, '_label -> "Year")
+            @helper.textarea(field = newItemForm("description"), args = 'rows -> 5, 'cols -> 50, '_label -> "Description")
+            @helper.inputText(field = newItemForm("image"), args = '_label -> "Image")
+            <input type="submit" value="Add Item"/>
+        }
+    </body>
+</html>
